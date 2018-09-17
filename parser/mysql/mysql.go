@@ -104,5 +104,10 @@ func (p *Parser) Parse(lines []string) ([]Data, error) {
 
 func (p *Parser) Flush() (data Data, err error) {
 	data = Data(p.ps.Flush())
+	if data != nil {
+		for _, l := range p.labels {
+			data[l.Name] = l.Value
+		}
+	}
 	return
 }

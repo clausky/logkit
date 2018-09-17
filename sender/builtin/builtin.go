@@ -1,6 +1,7 @@
 package builtin
 
 import (
+	_ "github.com/qiniu/logkit/sender/aliyun_sls"
 	_ "github.com/qiniu/logkit/sender/discard"
 	_ "github.com/qiniu/logkit/sender/elasticsearch"
 	_ "github.com/qiniu/logkit/sender/file"

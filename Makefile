@@ -1,6 +1,6 @@
 all:
 	go generate
-	CGO_ENABLED=1 go install -v
+	CGO_ENABLED=0 go install -ldflags="-s -w" -v
 	mv ${GOPATH}/bin/logkit .
 
 install: all

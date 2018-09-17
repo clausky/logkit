@@ -58,7 +58,7 @@ Usage:
 
 The commands & flags are:
 
-  -v                 print the version to stdout.
+  -vv                 print the version to stdout.
   -h                 print logkit usage info to stdout.
   -upgrade           check and upgrade version.
 
@@ -70,14 +70,14 @@ Examples:
   logkit -f logkit.conf
 
   # check version
-  logkit -v
+  logkit -vv
 
   # checking and upgrade version
   logkit -upgrade
 `
 
 var (
-	fversion = flag.Bool("v", false, "print the version to stdout")
+	fversion = flag.Bool("vv", false, "print the version to stdout")
 	upgrade  = flag.Bool("upgrade", false, "check and upgrade version")
 	confName = flag.String("f", "logkit.conf", "configuration file to load")
 )
@@ -226,6 +226,9 @@ func main() {
 		fmt.Println("Core: ", osInfo.Core)
 		fmt.Println("OS: ", osInfo.OS)
 		fmt.Println("Platform: ", osInfo.Platform)
+		if ip, err := utilsos.GetLocalIP(); err == nil {
+			fmt.Println("Local IP: ", ip)
+		}
 		return
 	case *upgrade:
 		cli.CheckAndUpgrade(NextVersion)

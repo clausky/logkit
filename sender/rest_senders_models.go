@@ -15,6 +15,7 @@ var ModeUsages = KeyValueSlice{
 	{TypeElastic, "发送至 Elasticsearch 服务", ""},
 	{TypeKafka, "发送至 Kafka 服务", ""},
 	{TypeHttp, "发送至 HTTP 服务器", ""},
+	{"aliyun_sls", "发送至 阿里云日志 服务", ""},
 }
 
 var (
@@ -863,5 +864,52 @@ var ModeKeyOptions = map[string][]Option{
 		OptionFtMemoryChannel,
 		OptionFtMemoryChannelSize,
 		OptionKeyFtLongDataDiscard,
+	},
+	"aliyun_sls": {
+		{
+			KeyName:      "sls_endpoint",
+			ChooseOnly:   false,
+			Default:      "",
+			Placeholder:  "cn-qingdao.log.aliyuncs.com",
+			DefaultNoUse: true,
+			Required:     true,
+			Description:  "日志服务入口(endpoint)",
+		},
+		{
+			KeyName:      "sls_project",
+			ChooseOnly:   false,
+			Default:      "",
+			Placeholder:  "project",
+			DefaultNoUse: true,
+			Required:     true,
+			Description:  "日志服务Project名称(project)",
+		},
+		{
+			KeyName:      "sls_ak",
+			ChooseOnly:   false,
+			Default:      "",
+			Placeholder:  "AccessKeyId",
+			DefaultNoUse: true,
+			Required:     true,
+			Description:  "阿里云访问密钥ID(AccessKeyId)",
+		},
+		{
+			KeyName:      "sls_sk",
+			ChooseOnly:   false,
+			Default:      "",
+			Placeholder:  "AccessKeySecret",
+			DefaultNoUse: true,
+			Required:     true,
+			Description:  "阿里云访问密钥(AccessKeySecret)",
+		},
+		{
+			KeyName:      "sls_store",
+			ChooseOnly:   false,
+			Default:      "",
+			Placeholder:  "Logstore",
+			DefaultNoUse: true,
+			Required:     true,
+			Description:  "日志库(Logstore)",
+		},
 	},
 }

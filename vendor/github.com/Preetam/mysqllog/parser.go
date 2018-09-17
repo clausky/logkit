@@ -58,12 +58,13 @@ func (p *Parser) Flush() LogEvent {
 	if !p.inQuery {
 		return nil
 	}
+	p.inQuery = false
 	event := parseEntry(p.lines)
 	p.lines = p.lines[:0]
 	return event
 }
 
-var userHostAttributesRe = regexp.MustCompile(`\b(User@Host: [\w\[\]]+ @ (?:)(\w+)?)|(Id:.+)`)
+var userHostAttributesRe = regexp.MustCompile(`\b(User@Host: [\w\[\]]+ @.*)|(Id:.+)`)
 var attributesRe = regexp.MustCompile(`\b([\w_]+:\s+[^\s]+)\b`)
 
 // parseEntry actually parses lines that belong to a log event.
@@ -83,7 +84,11 @@ func parseEntry(lines []string) LogEvent {
 				case "User@Host":
 					userHostParts := strings.Split(parts[1], "@")
 					event["User"] = strings.TrimSpace(strings.Split(userHostParts[0], "[")[0])
-					event["Host"] = strings.TrimSpace(strings.Split(userHostParts[1], "[")[0])
+					hostsplit := strings.Split(userHostParts[1], "[")
+					event["Host"] = strings.TrimSpace(hostsplit[0])
+					if event["Host"] == "" && len(hostsplit) > 1 {
+						event["Host"] = strings.TrimSpace(strings.Split(hostsplit[1], "]")[0])
+					}
 				}
 			}
 			continue
